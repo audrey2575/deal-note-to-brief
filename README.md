@@ -53,17 +53,17 @@ a scripting exercise.
 
 ## What it does
 
-1. **Parse** (`dealbrief/parser.py`) — reads semi-structured notes (`Label:
+1. **Parse** (`dealbrief/parser.py`): reads semi-structured notes (`Label:
    value` lines, tolerant of casing and common aliases like `Valuation` /
    `Raise` both mapping to the same `ask` field) and pulls out Company,
    Sector, Stage, Ask, Problem, Solution, Traction, Team, and Risks. A
    field's value can span multiple lines; a blank line ends it. Anything
    the parser can't find is marked missing explicitly rather than dropped
    silently.
-2. **Brief** (`dealbrief/brief.py`) — assembles the parsed fields into a
+2. **Brief** (`dealbrief/brief.py`): assembles the parsed fields into a
    Markdown one-pager with a generated executive summary up top, and a
    "Gaps To Close Before IC" section if anything important is missing.
-3. **CLI** (`dealbrief/cli.py`) — `python -m dealbrief.cli notes.txt [--out
+3. **CLI** (`dealbrief/cli.py`): `python -m dealbrief.cli notes.txt [--out
    brief.md] [--use-claude]`.
 
 ## What's next (if this were a real v2)
