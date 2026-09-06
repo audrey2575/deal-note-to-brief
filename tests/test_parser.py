@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from dealbrief.parser import parse_notes, MISSING_PLACEHOLDER
+from dealbrief.parser import HEADER_MISSING_PLACEHOLDER, MISSING_PLACEHOLDER, parse_notes
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -73,3 +73,35 @@ def test_empty_notes_produce_all_missing_fields_without_crashing():
         "traction",
         "team",
     ]
+
+
+def test_call_metadata_fields_are_parsed_from_the_header():
+    raw = (FIXTURES / "notes_with_meta.txt").read_text()
+    notes = parse_notes(raw)
+
+    assert notes.get("date") == "2026-09-02"
+    assert "Jamie Wu" in notes.get("attendees")
+    assert "demo day" in notes.get("how_met")
+    # Metadata fields are optional, not part of REQUIRED_FIELDS, so a note
+    # missing them shouldn't show up as a "gap to close before IC".
+    assert "date" not in notes.missing_fields()
+    assert "attendees" not in notes.missing_fields()
+    assert "how_met" not in notes.missing_fields()
+
+
+def test_call_metadata_fields_are_optional_with_their_own_placeholder():
+    # Older notes (like the existing sample fixture) never had these fields
+    # at all - that should be fine, not a parsing error, and callers can ask
+    # for a friendlier default than the "follow up on next call" language
+    # that makes sense for deal content but not for a missing call date.
+    raw = (FIXTURES / "sample_notes.txt").read_text()
+    notes = parse_notes(raw)
+
+    assert notes.get("date") == MISSING_PLACEHOLDER
+    assert notes.get("date", HEADER_MISSING_PLACEHOLDER) == HEADER_MISSING_PLACEHOLDER
+
+
+def test_how_met_aliases_are_recognized():
+    raw = "Source: Cold inbound via website form\nCompany: Foo\n"
+    notes = parse_notes(raw)
+    assert "Cold inbound" in notes.get("how_met")

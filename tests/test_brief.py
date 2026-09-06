@@ -2,6 +2,7 @@ from pathlib import Path
 
 from dealbrief.brief import build_brief
 from dealbrief.llm_client import MockLLMClient
+from dealbrief.news import NewsItem, NewsResult
 from dealbrief.parser import parse_notes
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -54,3 +55,64 @@ def test_executive_summary_reflects_problem_and_traction():
     summary_section = out.split("## Executive Summary")[1].split("## Problem")[0]
     assert "20% of labor hours" in summary_section
     assert "$180k ARR" in summary_section
+
+
+def test_header_shows_call_metadata_when_present():
+    raw = (FIXTURES / "notes_with_meta.txt").read_text()
+    notes = parse_notes(raw)
+    out = build_brief(notes, llm_client=MockLLMClient())
+
+    header = out.split("\n\n")[1]
+    assert "**Date:** 2026-09-02" in header
+    assert "Jamie Wu" in header
+    assert "demo day" in header
+
+
+def test_header_shows_placeholder_for_missing_call_metadata():
+    raw = (FIXTURES / "sample_notes.txt").read_text()
+    notes = parse_notes(raw)
+    out = build_brief(notes, llm_client=MockLLMClient())
+
+    header = out.split("\n\n")[1]
+    assert "**Date:** Not noted" in header
+    assert "**Attendees:** Not noted" in header
+    assert "**How We Met:** Not noted" in header
+
+
+def test_news_section_is_omitted_when_no_news_result_passed():
+    raw = (FIXTURES / "sample_notes.txt").read_text()
+    notes = parse_notes(raw)
+    out = build_brief(notes, llm_client=MockLLMClient())
+    assert "## Recent News" not in out
+
+
+def test_news_section_lists_items_when_a_news_result_is_passed():
+    raw = (FIXTURES / "sample_notes.txt").read_text()
+    notes = parse_notes(raw)
+    news = NewsResult(
+        query="Acme Robotics",
+        items=[
+            NewsItem(
+                title="Acme Robotics closes new pilot with regional retailer",
+                source="TechCrunch",
+                link="https://example.com/acme-pilot",
+                published="Mon, 01 Sep 2026 12:00:00 GMT",
+            )
+        ],
+    )
+    out = build_brief(notes, llm_client=MockLLMClient(), news=news)
+
+    assert "## Recent News" in out
+    assert "Acme Robotics closes new pilot" in out
+    assert "TechCrunch" in out
+    assert "https://example.com/acme-pilot" in out
+
+
+def test_news_section_surfaces_the_error_when_search_found_nothing():
+    raw = (FIXTURES / "sample_notes.txt").read_text()
+    notes = parse_notes(raw)
+    news = NewsResult(query="Acme Robotics", items=[], error="No recent news found for 'Acme Robotics'.")
+    out = build_brief(notes, llm_client=MockLLMClient(), news=news)
+
+    assert "## Recent News" in out
+    assert "No recent news found" in out

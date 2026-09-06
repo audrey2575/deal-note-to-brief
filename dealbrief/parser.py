@@ -16,7 +16,22 @@ import re
 from dataclasses import dataclass, field
 
 # Canonical field name -> accepted aliases seen in the label position.
+#
+# "date", "attendees" and "how_met" are call metadata rather than deal
+# content: they're never required (older notes won't have them, and a brief
+# shouldn't block on them), but when present they belong at the top of the
+# brief, not buried with Problem/Solution/Traction.
 LABEL_ALIASES: dict[str, list[str]] = {
+    "date": ["date", "call date", "meeting date"],
+    "attendees": ["attendees", "participants", "who was on the call", "on the call"],
+    "how_met": [
+        "how we met",
+        "how met",
+        "source",
+        "intro via",
+        "introduced by",
+        "how did we meet",
+    ],
     "company": ["company", "company name", "startup"],
     "sector": ["sector", "industry", "vertical"],
     "stage": ["stage", "round"],
@@ -28,6 +43,15 @@ LABEL_ALIASES: dict[str, list[str]] = {
     "risks": ["risks", "concerns", "open questions", "risk"],
     "notes": ["notes", "follow up", "follow-up", "misc"],
 }
+
+# Metadata fields shown in the brief's header block, in display order,
+# each paired with its display label.
+HEADER_FIELDS: list[tuple[str, str]] = [
+    ("date", "Date"),
+    ("attendees", "Attendees"),
+    ("how_met", "How We Met"),
+]
+HEADER_MISSING_PLACEHOLDER = "Not noted"
 
 # Flattened alias -> canonical lookup, built once at import time.
 _ALIAS_TO_FIELD: dict[str, str] = {
@@ -49,7 +73,9 @@ class DealNotes:
     fields: dict[str, str] = field(default_factory=dict)
     raw: str = ""
 
-    def get(self, name: str) -> str:
+    def get(self, name: str, default: str | None = None) -> str:
+        if default is not None:
+            return self.fields.get(name, default)
         return self.fields.get(name, MISSING_PLACEHOLDER)
 
     def missing_fields(self) -> list[str]:

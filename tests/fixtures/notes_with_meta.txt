@@ -1,0 +1,18 @@
+Date: 2026-09-02
+Attendees: Audrey (K2), Marc (K2), Jamie Wu (founder), Lin Park (co-founder)
+How We Met: Intro from a portfolio founder at last month's demo day
+
+Company: Northwind Analytics
+Sector: Developer tools
+Stage: Series A
+Ask: $6M at $28M post
+
+Problem: Engineering teams lose a full day a week reconciling logs across
+three separate observability tools that don't talk to each other.
+
+Solution: A single pane of glass that ingests all three log formats and
+normalizes them into one queryable timeline.
+
+Traction: 12 paying customers, $340k ARR, added 4 logos last quarter.
+
+Team: Both co-founders shipped observability tooling at Datadog for 5 years.

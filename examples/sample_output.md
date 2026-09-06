@@ -1,5 +1,6 @@
 # Investment Brief: Acme Robotics
 
+**Date:** Not noted  |  **Attendees:** Not noted  |  **How We Met:** Not noted
 **Sector:** Industrial automation  |  **Stage:** Seed  |  **Ask:** $2M at $10M post
 
 ## Executive Summary

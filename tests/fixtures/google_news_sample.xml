@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>"Acme Robotics" - Google News</title>
+    <link>https://news.google.com/rss/search?q=%22Acme+Robotics%22</link>
+    <language>en-US</language>
+    <item>
+      <title>Acme Robotics closes new pilot with regional retailer - TechCrunch</title>
+      <link>https://news.google.com/rss/articles/example-1</link>
+      <guid>https://news.google.com/rss/articles/example-1</guid>
+      <pubDate>Mon, 01 Sep 2026 12:00:00 GMT</pubDate>
+      <source url="https://techcrunch.com">TechCrunch</source>
+    </item>
+    <item>
+      <title>Why warehouse robotics is having a moment</title>
+      <link>https://news.google.com/rss/articles/example-2</link>
+      <guid>https://news.google.com/rss/articles/example-2</guid>
+      <pubDate>Sun, 31 Aug 2026 09:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Acme Robotics named to regional startups-to-watch list - Local Business Journal</title>
+      <link>https://news.google.com/rss/articles/example-3</link>
+      <guid>https://news.google.com/rss/articles/example-3</guid>
+      <pubDate>Fri, 29 Aug 2026 15:30:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
