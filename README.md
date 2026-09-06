@@ -18,6 +18,9 @@ pallets... Traction so far: 3 paid pilot customers, $180k ARR, 15% MoM growth...
 Full example: [`examples/sample_output.md`](examples/sample_output.md), generated from
 [`tests/fixtures/sample_notes.txt`](tests/fixtures/sample_notes.txt).
 
+See [`CHANGELOG.md`](CHANGELOG.md) for how this project evolved from v0.1
+to v0.2, and why.
+
 There's also a styled, standalone HTML version of the same brief (`--html`)
 — same content, but built to actually hand to a partner rather than read in
 a terminal, and a `--news` flag that adds a live "Recent News" section on
