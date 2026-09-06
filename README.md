@@ -1,7 +1,7 @@
 # deal-note-to-brief
 
 Turns messy, real-world call and diligence notes into a structured one-page
-investment brief — and, just as importantly, into an explicit list of what
+investment brief, and, just as importantly, into an explicit list of what
 still isn't known.
 
 ```
@@ -19,23 +19,21 @@ Full example: [`examples/sample_output.md`](examples/sample_output.md), generate
 
 ## Why I built this
 
-This is the one project in this portfolio that isn't a hypothetical — it's
+This is the one project in this portfolio that isn't a hypothetical. It's
 scoped directly off a workflow I run several times a week as a VC associate.
 After every intro call, the notes look roughly the same: half-labeled,
 inconsistent, and captured under time pressure, and then someone (usually
-me) has to turn them into a clean one-pager before it goes anywhere near an
-investment committee. That rewrite step is pure overhead — it doesn't add
+me) has to turn them into a clean one-pager. That rewrite step is pure overhead, it doesn't add
 judgment, it just costs time and is exactly the kind of repetitive
 structuring work a tool should absorb so a person can spend their attention
 on the actual decision.
 
 I'm using this project as a small case study in product thinking, not just
-a scripting exercise, so here's the reasoning I'd want a hiring manager to
-see, not just the code:
+a scripting exercise.
 
 - **The user isn't hypothetical.** It's me, and the "spec" came from
   actually noticing where my own time went, not from imagining a persona.
-- **Garbage in, garbage flagged — not garbage out.** The easy version of
+- **Garbage in, garbage flagged, not garbage out.** The easy version of
   this tool would silently produce a confident-looking brief no matter how
   thin the notes were. I decided early that a brief which hides its own
   gaps is actively dangerous in an IC context, so a `## Gaps To Close
@@ -44,7 +42,7 @@ see, not just the code:
 - **The AI layer is optional by design, not by accident.** Parsing and
   structuring never touch the network. Only the 2-3 sentence executive
   summary calls an LLM, and it falls back to a deterministic, rule-based
-  summary with zero configuration — because a tool a partner might use
+  summary with zero configuration, because a tool a partner might use
   between meetings has to work with no setup and no flakiness, and because
   it made the core logic trivially unit-testable (12 tests, all offline, all
   deterministic).
