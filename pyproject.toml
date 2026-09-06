@@ -1,0 +1,8 @@
+[project]
+name = "deal-note-to-brief"
+version = "0.1.0"
+description = "Turn messy deal/diligence notes into a structured one-page investment brief."
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
