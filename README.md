@@ -74,7 +74,7 @@ a scripting exercise.
 - A structured JSON export alongside the Markdown, so the same parsed
   fields could feed a lightweight pipeline tracker rather than living only
   as prose.
-- Batch mode over a folder of notes, with a rollup view across deals — the
+- Batch mode over a folder of notes, with a rollup view across deals. The
   natural next question once you've used this on a few calls is "how does
   this one compare to the others I've seen this month."
 
